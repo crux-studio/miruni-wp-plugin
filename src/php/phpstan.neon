@@ -1,0 +1,10 @@
+parameters:
+    level: 8  # Maximum level of strictness
+    paths:
+        - src
+    rootDir: ../../
+    scanFiles:
+        - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+        - vendor/arifpavel/elementor-stubs/elementor-stubs.php
+    bootstrapFiles:
+        - phpstan-bootstrap.php

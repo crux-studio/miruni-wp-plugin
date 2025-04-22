@@ -1,0 +1,37 @@
+{
+  "extends": ["plugin:@nx/react-typescript", "../../.eslintrc.json"],
+  "parserOptions": {
+    "project": ["./tsconfig.*?.json"]
+  },
+
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "next-i18next",
+                "message": "Please use 'react-i18next' import instead because this isn't a Next.js app"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {}
+    }
+  ],
+  "env": {
+    "jest": true
+  }
+}

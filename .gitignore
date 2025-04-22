@@ -1,0 +1,110 @@
+*.zip
+
+languages/*.po
+languages/*.mo
+# Keep the POT file
+!languages/*.pot
+_logs_*
+
+vendor
+
+
+wordpress_migration
+*.pem
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# local definitions
+.env
+.env.*
+env.json
+.npmrc
+.nx
+
+# compiled output
+dist
+/tmp
+/out-tsc
+__generated__
+/coverage
+
+# dependencies
+node_modules
+.venv
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+# .vscode/*
+# !.vscode/settings.json
+!.vscode/tasks.json
+# !.vscode/launch.json
+!.vscode/extensions.json
+
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+_test_log
+
+# System Files
+.DS_Store
+Thumbs.db
+.tool-versions
+
+# Remix files
+apps/**/build
+apps/**/.cache
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+.terraform.lock.hcl
+terraform/*/tmp
+
+.next
+
+apps/slack/src/db/dynamo-db/docker/dynamodb/**
+
+# ESBuild for serverless
+.esbuild
+
+# New Relic
+newrelic_agent.log
+
+# Serverless directories
+.serverless
+
+# Playwright
+apps/web-e2e/.auth
+test-results/**/trace.zip
+
+# Python
+*.pyc
+__pycache__/
+
+

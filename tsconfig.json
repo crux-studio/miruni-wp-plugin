@@ -1,0 +1,40 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "es2020",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "noEmit": false,
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "incremental": true,
+    "noImplicitAny": false,
+    "paths": {
+      "#/*": ["./src/*"],
+      "@miruni/eds": ["../../packages/eds/src/index.ts"],
+      "@miruni/graphql": ["../../packages/graphql/src/index.ts"],
+      "@miruni/hooks": ["../../packages/hooks/src/index.ts"],
+      "@miruni/models": ["../../packages/models/src/index.ts"],
+      "@miruni/utils": ["../../packages/utils/src/index.ts"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "index.d.ts",
+    "**/*/index.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/admin/**/*.ts",
+    "src/admin/**/*.tsx",
+    "../../packages/hooks/src/lib/use-team-priorities.ts",
+    "../../packages/hooks/src/lib/use-team-statuses.ts",
+    "../../packages/hooks/src/lib/use-team-story-types.ts"
+  ]
+}

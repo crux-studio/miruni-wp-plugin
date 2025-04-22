@@ -1,0 +1,102 @@
+services:
+  wordpress:
+    image: wordpress:latest
+    build: .
+    platform: linux/arm64/v8
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        // SSL and Site URLs
+        define('FORCE_SSL_ADMIN', true);
+        define('WP_HOME', 'https://wp.miruni.local');
+        define('WP_SITEURL', 'https://wp.miruni.local');
+        // Debug settings
+
+        define('WP_DEBUG_DISPLAY', false);
+        define('SCRIPT_DEBUG', true);
+        // Upload limits - PHP settings
+        @ini_set('upload_max_filesize', '128M');
+        @ini_set('post_max_size', '128M');
+        @ini_set('memory_limit', '512M');
+        @ini_set('max_execution_time', '300');
+      PHP_INI_DIRECTIVES: |
+        error_reporting = E_ALL
+        display_errors = Off
+        log_errors = On
+        error_log = /var/www/html/wp-content/logs/php-error.log
+        opcache.enable = 0
+    volumes:
+      - ./dist/my-wordpress-plugin:/var/www/html/wp-content/plugins/my-wordpress-plugin
+      - ./_logs_wp:/var/www/html/wp-content/debug.log:rw
+    depends_on:
+      - db
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    networks:
+      - wordpress_net
+
+  db:
+    image: mariadb:10.6
+    platform: linux/arm64/v8
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: somewordpress
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - wordpress_net
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - '443:443'
+      - '80:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./_logs_nginx:/var/log/nginx
+      - nginx_certs:/etc/nginx/certs
+    depends_on:
+      - wordpress
+    command: |
+      /bin/sh -c '
+      apk add --no-cache openssl
+      cd /etc/nginx/certs
+      if [ ! -f nginx.crt ] || [ ! -f nginx.key ]; then
+        echo "Generating new SSL certificates..."
+        openssl req -x509 \
+                   -nodes \
+                   -days 365 \
+                   -newkey rsa:2048 \
+                   -keyout nginx.key \
+                   -out nginx.crt \
+                   -subj "/CN=wp.miruni.local" \
+                   -addext "subjectAltName=DNS:wp.miruni.local" \
+                   -batch
+        chmod 644 nginx.crt
+        chmod 640 nginx.key
+        echo "Certificates generated successfully"
+      else
+        echo "Using existing certificates"
+      fi
+      echo "Starting Nginx..."
+      exec nginx -g "daemon off;"'
+
+    networks:
+      - wordpress_net
+
+volumes:
+  wordpress:
+  db:
+  nginx_certs:
+
+networks:
+  wordpress_net:
+    driver: bridge
