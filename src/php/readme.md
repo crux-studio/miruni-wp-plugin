@@ -58,6 +58,12 @@ We use the following third party software in our plugin:
 - [Auth0](https://auth0.com/) - used to securely process your Miruni login information and maintain your secure session and state while using Miruni and the Miruni WordPress plugin. Name, email address, and password are set and managed by Auth0 utilizing industry standard best practices and secure end-to-end encrypted links to enable login and to maintain a secure authorized session to Miruni. For more information see Terms and Conditions [here](https://www.okta.com/terms-of-service/), and Privacy Policy [here](https://www.okta.com/privacy-policy/).
 - [New Relic](https://newrelic.com/) - used to collect performance and operating metrics to keep Miruni running at 100% for you and your business. Anonymous usage data is sent to New Relic utilizing industry standard best practices and secure end-to-end encrypted links to enable us to watch for backend performance and operating issues in our platform. For more information see Terms and Conditions [here](https://newrelic.com/termsandconditions/terms), and Privacy Policy [here](https://newrelic.com/termsandconditions/privacy).
 
+### Source Code
+
+The source code for this plugin is publicly available on GitHub:
+
+[https://github.com/crux-studio/miruni-wp-plugin](https://github.com/crux-studio/miruni-wp-plugin)
+
 == Installation ==
 
 1. Log in to your WordPress dashboard.
